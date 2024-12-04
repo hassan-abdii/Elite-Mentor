@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Pricing() {
   const plans = [
@@ -13,7 +13,12 @@ export default function Pricing() {
         "Performance tracking",
         "Email support"
       ],
-      cta: "Get Started"
+      cta: "Get Started",
+      mailto: {
+        email: "qazzmabdi@gmail.com",
+        subject: "I want to have 1-on-1 mentorship",
+        body: "Hi,\n\nI am interested in the 1-on-1 Mentorship plan. Please provide more details about the next steps.\n\nThank you."
+      }
     },
     {
       title: "Community Channel",
@@ -28,7 +33,7 @@ export default function Pricing() {
       cta: "Coming Soon",
       disabled: true
     }
-  ]
+  ];
 
   return (
     <section id="pricing" className="py-20 bg-gray-900">
@@ -51,15 +56,33 @@ export default function Pricing() {
                 </ul>
               </CardContent>
               <CardFooter>
-                <Button className="w-full" size="lg" disabled={plan.disabled}>
-                  {plan.cta}
-                </Button>
+                {!plan.disabled ? (
+                  <Button
+                    className="w-full"
+                    size="lg"
+                    onClick={() => {
+                      if (plan.mailto) {
+                        const mailtoLink = `mailto:${plan.mailto.email}?subject=${encodeURIComponent(
+                          plan.mailto.subject
+                        )}&body=${encodeURIComponent(plan.mailto.body)}`;
+                        window.open(mailtoLink, "_blank");
+                      } else {
+                        console.error("Mailto details are not defined for this plan.");
+                      }
+                    }}
+                  >
+                    {plan.cta}
+                  </Button>
+                ) : (
+                  <Button className="w-full" size="lg" disabled>
+                    {plan.cta}
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }
-
