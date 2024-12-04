@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -11,14 +13,14 @@ export default function Pricing() {
         "4 weekly private sessions",
         "Custom strategy development",
         "Performance tracking",
-        "Email support"
+        "Email support",
       ],
       cta: "Get Started",
       mailto: {
         email: "qazzmabdi@gmail.com",
         subject: "I want to have 1-on-1 mentorship",
-        body: "Hi,\n\nI am interested in the 1-on-1 Mentorship plan. Please provide more details about the next steps.\n\nThank you."
-      }
+        body: "Hi,\n\nI am interested in the 1-on-1 Mentorship plan. Please provide more details about the next steps.\n\nThank you.",
+      },
     },
     {
       title: "Community Channel",
@@ -28,18 +30,20 @@ export default function Pricing() {
         "Daily market analysis",
         "Trading setups",
         "Community access",
-        "Group discussions"
+        "Group discussions",
       ],
       cta: "Coming Soon",
-      disabled: true
-    }
+      disabled: true,
+    },
   ];
 
   return (
     <section id="pricing" className="py-20 bg-gray-900">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center text-gray-100">Pricing Plans</h2>
-        <p className="text-xl text-center mb-12 text-gray-300">Choose the plan that best fits your trading journey</p>
+        <p className="text-xl text-center mb-12 text-gray-300">
+          Choose the plan that best fits your trading journey
+        </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {plans.map((plan, index) => (
             <Card key={index} className="bg-gray-800 border-gray-700">
@@ -62,6 +66,7 @@ export default function Pricing() {
                     size="lg"
                     onClick={() => {
                       if (plan.mailto) {
+                        // Safe usage of plan.mailto
                         const mailtoLink = `mailto:${plan.mailto.email}?subject=${encodeURIComponent(
                           plan.mailto.subject
                         )}&body=${encodeURIComponent(plan.mailto.body)}`;
