@@ -7,7 +7,8 @@ export default function Pricing() {
   const plans = [
     {
       title: "1-on-1 Mentorship",
-      price: "£999/month",
+      originalPrice: "£999",
+      discountedPrice: "£499.50",
       description: "Personalized trading guidance",
       features: [
         "4 weekly private sessions",
@@ -46,13 +47,29 @@ export default function Pricing() {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {plans.map((plan, index) => (
-            <Card key={index} className="bg-gray-800 border-gray-700">
+            <Card key={index} className="bg-gray-800 border-gray-700 relative overflow-hidden">
+              {plan.discountedPrice && (
+                <div className="absolute top-0 right-0 bg-red-500 text-white px-4 py-1 rounded-bl-lg font-semibold text-sm">
+                  50% OFF
+                </div>
+              )}
               <CardHeader>
                 <CardTitle className="text-gray-100">{plan.title}</CardTitle>
                 <CardDescription className="text-gray-300">{plan.description}</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-4xl font-bold mb-6 text-gray-100">{plan.price}</p>
+                {plan.discountedPrice ? (
+                  <div className="mb-6">
+                    <p className="text-4xl font-bold text-gray-100">
+                      {plan.discountedPrice}
+                      <span className="text-lg font-normal">/month</span>
+                    </p>
+                    <p className="text-xl text-gray-400 line-through mt-1">{plan.originalPrice}/month</p>
+                    <p className="text-sm text-yellow-400 font-semibold mt-2">Limited Time Only</p>
+                  </div>
+                ) : (
+                  <p className="text-4xl font-bold mb-6 text-gray-100">{plan.price}</p>
+                )}
                 <ul className="space-y-2 text-gray-300 mb-6">
                   {plan.features.map((feature, i) => (
                     <li key={i}>• {feature}</li>
@@ -66,7 +83,6 @@ export default function Pricing() {
                     size="lg"
                     onClick={() => {
                       if (plan.mailto) {
-                        // Safe usage of plan.mailto
                         const mailtoLink = `mailto:${plan.mailto.email}?subject=${encodeURIComponent(
                           plan.mailto.subject
                         )}&body=${encodeURIComponent(plan.mailto.body)}`;
@@ -91,3 +107,4 @@ export default function Pricing() {
     </section>
   );
 }
+
